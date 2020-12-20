@@ -1,4 +1,4 @@
-# hotel-reservation
+# hotel-reservation-client
 
 ## Project setup
 ```
