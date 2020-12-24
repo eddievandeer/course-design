@@ -10,4 +10,14 @@ const http = axios.create({
     }
 })
 
+http.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response.status === 401) {
+            store.dispatch('doLogout')
+        }
+        return Promise.reject(error)
+    }
+)
+
 export default http
