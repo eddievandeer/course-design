@@ -13,7 +13,16 @@ const routes = [
             {
                 path: '/login',
                 name: 'LoginBox',
-                component: () => import('../components/user/LoginBox.vue')
+                component: () => import('../components/user/LoginBox.vue'),
+                beforeEnter: (to, from, next) => {
+                    let user = localStorage.getItem('user')
+                    if (user && user !== 'undefined') {
+                        next('home')
+                    }
+                    else {
+                        next()
+                    }
+                }
             },
             {
                 path: '/register',
@@ -46,13 +55,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
-})
-
-router.beforeEach((to, from, next) => {
-    if (to.name !== 'Home') {
-        next()
-    }
-    else next()
 })
 
 export default router
