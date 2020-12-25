@@ -3,8 +3,20 @@
 </template>
 
 <script>
+    import {
+        useStore
+    } from 'vuex'
+
     export default {
-        name: 'App'
+        name: 'App',
+        setup() {
+            let user = localStorage.getItem('user')
+            if (user && user !== 'undefined') {
+                const store = useStore()
+                const userData = JSON.parse(user)
+                store.commit('SET_USER_DATA', userData)
+            }
+        }
     }
 </script>
 
