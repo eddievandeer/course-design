@@ -46,7 +46,7 @@
                 <p v-if="check.pwdEmpty" class="empty">密码不能为空</p>
             </div>
             <input type="submit" value="注册">
-            <app-dialog :show="loginErr.show" :type="'error'">{{loginErr.msg}}</app-dialog>
+            <app-dialog :show="DialogBox.show" :type="'error'">{{DialogBox.msg}}</app-dialog>
         </form>
         <loading :show="isLoading">正在提交...</loading>
     </div>
@@ -58,13 +58,16 @@
         ref
     } from 'vue'
     import {
+        useRouter
+    } from 'vue-router'
+    import {
         register
     } from '../../services/index'
+    import {
+        DialogBox
+    } from '../../utils/index'
     import Loading from '../common/Loading'
     import AppDialog from '../common/AppDialog'
-    import {
-        loginErr
-    } from '../../utils/index'
 
     export default {
         name: 'RegisterBox',
@@ -74,6 +77,7 @@
             AppDialog
         },
         setup() {
+            const router = useRouter()
             let isLoading = ref(false)
 
             function doRegister(userParams) {
@@ -82,7 +86,9 @@
                 result.then((response) => {
                     isLoading.value = false
                     if (response.data.code != 200) {
-                        loginErr.showDialog(response.data.msg)
+                        DialogBox.showDialog(response.data.msg)
+                    } else {
+                        router.push('login')
                     }
                 }).catch((error) => {
                     isLoading.value = false
@@ -95,7 +101,7 @@
                 checkEmpty,
                 doRegister,
                 isLoading,
-                loginErr
+                DialogBox
             }
         }
     }

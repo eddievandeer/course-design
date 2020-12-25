@@ -25,7 +25,7 @@
             </div>
             <p class="forget">忘记密码？</p>
             <input type="submit" value="登录">
-            <app-dialog :show="loginErr.show" :type="'error'">{{loginErr.msg}}</app-dialog>
+            <app-dialog :show="DialogBox.show" :type="'error'">{{DialogBox.msg}}</app-dialog>
         </form>
         <loading :show="isLoading">正在登录...</loading>
     </div>
@@ -40,13 +40,16 @@
         useStore
     } from 'vuex'
     import {
+        useRouter
+    } from 'vue-router'
+    import {
         login
     } from '../../services/index'
+    import {
+        DialogBox
+    } from '../../utils/index'
     import Loading from '../common/Loading'
     import AppDialog from '../common/AppDialog'
-    import {
-        loginErr
-    } from '../../utils/index'
 
     export default {
         name: 'LoginBox',
@@ -56,6 +59,7 @@
         },
         setup() {
             const store = useStore()
+            const router = useRouter()
             let isLoading = ref(false)
 
             function doLogin(userParams) {
@@ -66,13 +70,17 @@
                         .then((response) => {
                             isLoading.value = false
                             if (response.data.code != 200) {
-                                loginErr.showDialog(response.data.msg)
+                                DialogBox.showDialog(response.data.msg)
+                            } else {
+                                router.push('home')
                             }
                         })
                         .catch((error) => {
                             isLoading.value = false
-                            if (error.response.status == 500) {
-                                loginErr.showDialog('服务器繁忙，请稍后重试')
+                            if (error.response && error.response.status == 500) {
+                                DialogBox.showDialog('服务器繁忙，请稍后重试')
+                            } else {
+                                console.log(error);
                             }
                         })
                 } else {
@@ -88,7 +96,7 @@
                 checkPwdEmpty,
                 doLogin,
                 isLoading,
-                loginErr
+                DialogBox
             }
         }
     }
