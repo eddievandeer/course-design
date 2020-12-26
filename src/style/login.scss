@@ -1,0 +1,76 @@
+@import './values.scss';
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .user-info__wrapper-item {
+        position: relative;
+
+        .icon {
+            position: absolute;
+            top: 0.8rem;
+            left: 0.1rem;
+        }
+
+        .user-info {
+            width: $input-width;
+            height: 3rem;
+            color: #666666;
+            font-size: 16px;
+            padding-left: 1.8rem;
+            margin-bottom: 1.6rem;
+            border: none;
+            border-bottom: 1px solid #CDCDCD;
+
+            &:focus {
+                border-bottom: 1px solid #498EFD;
+                outline: none;
+            }
+
+            &::placeholder {
+                color: #8F95B0;
+                font-size: 14px;
+            }
+
+            &.error {
+                border-bottom: 1px solid #D95C5C;
+            }
+        }
+
+        .empty {
+            margin: 0;
+            color: #D95C5C;
+            font-size: 14px;
+            position: absolute;
+            top: 3.2rem;
+            left: .1rem;
+        }
+    }
+
+    .forget {
+        width: $other-width;
+        color: #8F95B0;
+        font-size: 14px;
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-decoration: underline;
+        text-align: right;
+    }
+
+    input[type="submit"] {
+        width: 11rem;
+        height: 3rem;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 23px;
+        border: 1px solid #DCDCDC;
+        background-image: linear-gradient(to right, #4888FE, #55C7F1);
+
+        &:active,
+        &:focus {
+            outline: none;
+        }
+    }
+}

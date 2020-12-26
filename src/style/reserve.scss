@@ -1,0 +1,94 @@
+@import '../style/values.scss';
+
+.reserve-wrapper {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(to right, #4888FE, #55C7F1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    form {
+        width: 50%;
+        height: calc(100vh - 4.75rem);
+        padding: 0 0 1rem 0;
+        background-color: #fff;
+        border-radius: 1rem 1rem 0 0;
+        position: relative;
+        @extend .flex;
+        justify-content: flex-start;
+        overflow: auto;
+
+        img {
+            width: 100%;
+            object-fit: cover;
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        .reserve-title {
+            width: 85%;
+            margin-top: 1rem;
+            margin-bottom: 1.4rem;
+
+            p {
+                color: #4A4A4A;
+                font-size: 20px;
+                margin: 0;
+                margin-bottom: 1.2rem;
+            }
+
+            span {
+                color: #636363;
+            }
+        }
+
+        .room-environment {
+            width: 100%;
+            @extend .flex;
+
+            .room-list {
+                width: 85%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+        }
+
+        .order-commit {
+            width: 85%;
+            height: 5rem;
+            color: #F73B0F;
+            font-size: 14px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            input[type="submit"] {
+                width: 4.8rem;
+                height: 2.7rem;
+                color: white;
+                font-size: 16px;
+                margin-left: 1rem;
+                border-radius: 5px;
+                background-color: #F73B0F;
+            }
+
+            span {
+                font-size: 22px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        & {
+            align-items: flex-end;
+
+            form {
+                width: 100%;
+                height: calc(100vh - 10rem);
+                border-radius: 1rem 1rem 0 0;
+                justify-content: flex-start;
+            }
+        }
+    }
+}
