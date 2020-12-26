@@ -37,18 +37,42 @@ const routes = [
         component: () => import('../views/Home.vue')
     },
     {
-        path: '/reserve/:type',
+        path: '/comment',
+        name: 'Comments',
+        component: () => import('../views/Comments.vue')
+    },
+    {
+        path: '/mine',
+        name: 'Mine',
+        component: () => import('../views/Mine.vue'),
+        beforeEnter: (to, from, next) => {
+            let user = localStorage.getItem('user')
+            if (user && user !== 'undefined') {
+                next()
+            }
+            else {
+                next('home')
+            }
+        }
+    },
+    {
+        path: '/reserve/:tid',
         name: 'Reserve',
         component: () => import('../views/Reserve.vue'),
         props: true,
         children: [
             {
-                path: '/reserve/:type/:rid',
+                path: '/reserve/:tid/:rid',
                 name: 'RoomDetail',
                 component: () => import('../components/reserve/RoomDetail.vue'),
                 props: true
             }
         ]
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: '404',
+        component: () => import('../views/404.vue'),
     }
 ]
 
