@@ -1,16 +1,29 @@
 <template>
     <div class="login-header-wrapper">
-        <router-link to="home">
-            <button class="login-header__menu-btn">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i>
-            </button>
-        </router-link>
+        <button class="login-header__menu-btn" @click="back">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button>
     </div>
 </template>
 
 <script>
+    import {
+        useRouter
+    } from 'vue-router'
+
     export default {
-        name: 'LoginHeader'
+        name: 'LoginHeader',
+        setup() {
+            const router = useRouter()
+
+            function back() {
+                router.push('/home')
+            }
+
+            return {
+                back
+            }
+        }
     }
 </script>
 
@@ -33,11 +46,8 @@
             height: 1.8rem;
             color: #fff;
             font-size: 28px;
-            border: none;
-            outline: none;
             margin-left: 1.5rem;
             background-color: transparent;
-            cursor: pointer;
         }
     }
 </style>
