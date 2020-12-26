@@ -96,12 +96,9 @@
                         height: 3rem;
                         color: #8F95B0;
                         font-size: 17px;
-                        border: none;
-                        outline: none;
                         box-sizing: border-box;
                         border-bottom: 1px solid #CDCDCD;
                         background-color: transparent;
-                        cursor: pointer;
 
                         &.active {
                             color: #498EFD;
