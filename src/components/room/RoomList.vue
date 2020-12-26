@@ -16,14 +16,12 @@
         DialogBox
     } from '../../utils/index'
     import RoomCard from './RoomCard'
-    import AppDialog from '../common/AppDialog'
 
     export default {
-        components: {
-            RoomCard,
-            AppDialog
-        },
         name: 'RoomList',
+        components: {
+            RoomCard
+        },
         setup() {
             let rooms = reactive(new Array())
             getAllRooms().then((response) => {
