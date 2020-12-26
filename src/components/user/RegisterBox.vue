@@ -66,16 +66,10 @@
     import {
         DialogBox
     } from '../../utils/index'
-    import Loading from '../common/Loading'
-    import AppDialog from '../common/AppDialog'
 
     export default {
         name: 'RegisterBox',
         props: ['type'],
-        components: {
-            Loading,
-            AppDialog
-        },
         setup() {
             const router = useRouter()
             let isLoading = ref(false)

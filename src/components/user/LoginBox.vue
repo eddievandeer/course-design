@@ -48,15 +48,9 @@
     import {
         DialogBox
     } from '../../utils/index'
-    import Loading from '../common/Loading'
-    import AppDialog from '../common/AppDialog'
 
     export default {
         name: 'LoginBox',
-        components: {
-            AppDialog,
-            Loading
-        },
         setup() {
             const store = useStore()
             const router = useRouter()
