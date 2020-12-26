@@ -13,7 +13,7 @@
             <div class="room-price">
                 <span>￥</span><span class="price">{{room.price}}</span>起
             </div>
-            <router-link :to="{ name: 'Reserve', params: { type: room.type } }" v-if="room.surplus > 0" class="reserve">
+            <router-link :to="{ name: 'Reserve', params: { tid: room.tid } }" v-if="room.surplus > 0" class="reserve">
                 <button>预订</button>
             </router-link>
             <button v-else class="reserve-disable">无空闲</button>
@@ -103,10 +103,7 @@
                 height: 2rem;
                 color: white;
                 border-radius: 4px;
-                border: none;
-                outline: none;
                 background-color: #F73B0F;
-                cursor: pointer;
             }
 
             .reserve-disable {

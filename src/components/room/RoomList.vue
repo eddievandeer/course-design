@@ -1,6 +1,7 @@
 <template>
     <div class="room-list-wrapper">
         <room-card v-for="(item,index) in rooms" :key="index" :room="item"></room-card>
+        <app-dialog :show="DialogBox.show" :type="'error'">{{DialogBox.msg}}</app-dialog>
     </div>
 </template>
 
@@ -8,53 +9,33 @@
     import {
         reactive
     } from 'vue'
+    import {
+        getAllRooms
+    } from '../../services/index'
+    import {
+        DialogBox
+    } from '../../utils/index'
     import RoomCard from './RoomCard'
+    import AppDialog from '../common/AppDialog'
 
     export default {
         components: {
-            RoomCard
+            RoomCard,
+            AppDialog
         },
         name: 'RoomList',
         setup() {
-            let rooms = reactive([{
-                    type: '高级间',
-                    description: '大床  26㎡  有窗',
-                    image: 'https://i.loli.net/2020/12/21/Vx9HfIBCRbTDvKc.jpg',
-                    price: 658,
-                    surplus: 10
-                },
-                {
-                    type: '高级间',
-                    description: '大床  26㎡  有窗',
-                    image: 'https://i.loli.net/2020/12/21/Vx9HfIBCRbTDvKc.jpg',
-                    price: 658,
-                    surplus: 0
-                },
-                {
-                    type: '高级间',
-                    description: '大床  26㎡  有窗',
-                    image: 'https://i.loli.net/2020/12/21/Vx9HfIBCRbTDvKc.jpg',
-                    price: 658,
-                    surplus: 10
-                },
-                {
-                    type: '高级双床房',
-                    description: '双床  30㎡  有窗',
-                    image: 'https://i.loli.net/2020/12/21/Vx9HfIBCRbTDvKc.jpg',
-                    price: 658,
-                    surplus: 10
-                },
-                {
-                    type: '高级间',
-                    description: '大床  26㎡  有窗',
-                    image: 'https://i.loli.net/2020/12/21/Vx9HfIBCRbTDvKc.jpg',
-                    price: 658,
-                    surplus: 10
+            let rooms = reactive(new Array())
+            getAllRooms().then((response) => {
+                if (response.data.code == 200) {
+                    rooms.push(...response.data.object)
+                } else {
+                    DialogBox.showDialog('服务器繁忙，请稍后重试')
                 }
-            ])
-
+            })
             return {
-                rooms
+                rooms,
+                DialogBox
             }
         }
     }
