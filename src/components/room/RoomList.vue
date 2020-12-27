@@ -1,7 +1,7 @@
 <template>
     <div class="room-list-wrapper">
         <room-card v-for="(item,index) in rooms" :key="index" :room="item"></room-card>
-        <app-dialog :show="DialogBox.show" :type="'error'">{{DialogBox.msg}}</app-dialog>
+        <app-dialog :show="DialogBox.show" :type="DialogBox.type">{{DialogBox.msg}}</app-dialog>
     </div>
 </template>
 

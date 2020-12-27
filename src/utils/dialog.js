@@ -2,9 +2,11 @@ class InstallDialog {
     constructor() {
         this.show = false
         this.msg = ''
+        this.type = ''
     }
 
-    showDialog(message) {
+    showDialog(message, type = 'error') {
+        this.type = type
         this.show = true
         this.msg = message
         setTimeout(() => {

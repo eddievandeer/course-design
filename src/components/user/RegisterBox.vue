@@ -46,7 +46,7 @@
                 <p v-if="check.pwdEmpty" class="empty">密码不能为空</p>
             </div>
             <input type="submit" value="注册">
-            <app-dialog :show="DialogBox.show" :type="'error'">{{DialogBox.msg}}</app-dialog>
+            <app-dialog :show="DialogBox.show" :type="DialogBox.type">{{DialogBox.msg}}</app-dialog>
         </form>
         <loading :show="isLoading">正在提交...</loading>
     </div>
@@ -82,6 +82,7 @@
                     if (response.data.code != 200) {
                         DialogBox.showDialog(response.data.msg)
                     } else {
+                        DialogBox.showDialog(response.data.msg, 'success')
                         router.push('login')
                     }
                 }).catch((error) => {

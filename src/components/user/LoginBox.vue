@@ -25,7 +25,7 @@
             </div>
             <p class="forget">忘记密码？</p>
             <input type="submit" value="登录">
-            <app-dialog :show="DialogBox.show" :type="'error'">{{DialogBox.msg}}</app-dialog>
+            <app-dialog :show="DialogBox.show" :type="DialogBox.type">{{DialogBox.msg}}</app-dialog>
         </form>
         <loading :show="isLoading">正在登录...</loading>
     </div>
@@ -47,7 +47,7 @@
     } from '../../services/index'
     import {
         DialogBox
-    } from '../../utils/index'
+    } from '../../utils'
 
     export default {
         name: 'LoginBox',
@@ -66,6 +66,8 @@
                             if (response.data.code != 200) {
                                 DialogBox.showDialog(response.data.msg)
                             } else {
+                                DialogBox.showDialog('登陆成功', 'success')
+                                console.log(DialogBox.type);
                                 router.push('home')
                             }
                         })
