@@ -42,12 +42,21 @@
                 background-color: #FEF0F0;
             }
 
+            &.success {
+                background-color: #f0f9eb;
+                border-color: #e1f3d8;
+            }
+
             .dialog-icon {
                 font-size: 14px;
                 margin-right: 0.6rem;
 
                 &.error {
                     color: #D95C5C;
+                }
+
+                &.success {
+                    color: #67C23A;
                 }
             }
         }
