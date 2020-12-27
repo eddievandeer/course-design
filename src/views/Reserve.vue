@@ -31,13 +31,15 @@
             </div>
         </form>
         <app-dialog :show="DialogBox.show" :type="DialogBox.type">{{DialogBox.msg}}</app-dialog>
+        <loading :show="isLoading">正在提交...</loading>
     </div>
 </template>
 
 <script>
     import {
         reactive,
-        onBeforeMount
+        onBeforeMount,
+        ref
     } from 'vue'
 
     import {
@@ -122,8 +124,10 @@
                 } else if (orderParams.leaveTime.length == 0 || orderParams.leaveTime == '') {
                     DialogBox.showDialog('请先选择退房日期')
                 } else {
+                    isLoading.value = true
                     reserve(orderParams, user.object.uid).then((response) => {
                         if (response.data.code == 200) {
+                            isLoading.value = false
                             DialogBox.showDialog(response.data.msg + '，三秒后跳转', 'success')
                             setTimeout(() => {
                                 router.push('/home')
@@ -153,6 +157,7 @@
         image: '',
         type: ''
     })
+    let isLoading = ref(false)
 </script>
 
 <style lang="scss" scoped>
