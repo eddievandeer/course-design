@@ -21,7 +21,7 @@
 
 <style lang="scss" scoped>
     .loading-wrapper {
-        z-index: 10;
+        z-index: 50;
         width: 100%;
         height: 100vh;
         display: flex;
@@ -32,7 +32,7 @@
         left: 0;
 
         .mask {
-            z-index: 10;
+            z-index: 40;
             width: 100%;
             height: 100%;
             position: fixed;
@@ -41,7 +41,7 @@
         }
 
         .loading {
-            z-index: 20;
+            z-index: 50;
             width: 12rem;
             height: 12rem;
             color: white;

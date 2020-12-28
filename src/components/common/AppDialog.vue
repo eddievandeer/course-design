@@ -23,7 +23,7 @@
 
 <style lang="scss" scoped>
     .dialog-wrapper {
-        z-index: 10;
+        z-index: 50;
         position: fixed;
         top: 1.2rem;
         left: 50%;
