@@ -43,3 +43,21 @@ export const reserve = (params, uid) => http.post('/order/reserve', {
     ...params,
     uid
 })
+
+export const logs = (uid) => http.get('/order/logs', {
+    params: {
+        uid
+    }
+})
+
+export const cancel = (oid) => http.post('/order/cancel', {
+    oid
+})
+
+export const remove = (oid) => http.post('/order/delete', {
+    oid
+})
+
+export const checkout = (oid) => http.post('/order/checkout', {
+    oid
+})
