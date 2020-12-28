@@ -37,11 +37,6 @@ const routes = [
         component: () => import('../views/Home.vue')
     },
     {
-        path: '/comment',
-        name: 'Comments',
-        component: () => import('../views/Comments.vue')
-    },
-    {
         path: '/mine',
         name: 'Mine',
         component: () => import('../views/Mine.vue'),
@@ -67,7 +62,17 @@ const routes = [
                 component: () => import('../components/reserve/RoomDetail.vue'),
                 props: true
             }
-        ]
+        ],
+        beforeEnter: (to, from, next) => {
+            let user = localStorage.getItem('user')
+            if (user && user !== 'undefined') {
+                next()
+            }
+            else {
+                alert('请先登录！')
+                next('login')
+            }
+        }
     },
     {
         path: '/:catchAll(.*)',
