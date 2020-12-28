@@ -146,7 +146,8 @@
                 doReserve,
                 roomDetail,
                 getTime,
-                DialogBox
+                DialogBox,
+                isLoading
             }
         }
     }
