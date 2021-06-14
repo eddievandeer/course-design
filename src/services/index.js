@@ -61,3 +61,20 @@ export const remove = (oid) => http.post('/order/delete', {
 export const checkout = (oid) => http.post('/order/checkout', {
     oid
 })
+
+export const recharge = (uid, amount) => http.post('/user/recharge', {
+    uid,
+    amount
+})
+
+export const showme = (uid) => http.get('/user/showme', {
+    params: {
+        uid
+    }
+})
+
+export const getLog = (rid) => http.get('/data/getLog', {
+    params: {
+        rid
+    }
+})
