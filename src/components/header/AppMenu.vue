@@ -58,7 +58,6 @@
         name: 'AppMenu',
         props: ['transparent'],
         setup() {
-            // TODO: pc端和手机端的菜单设置
             const store = useStore()
             const router = useRouter()
             let user = store.state.user
