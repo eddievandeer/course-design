@@ -87,12 +87,68 @@
                     font-size: 18px;
                 }
 
-                a button {
+                .recharge {
                     color: #75B5FC;
                     padding: 0;
-                    border-bottom: 1px solid #75B5FC;
                     background-color: transparent;
                     margin-right: 1rem;
+                }
+            }
+
+            .recharge-container {
+                width: 100%;
+                height: 100%;
+                background-color: rgba($color: #000000, $alpha: 0.7);
+                position: fixed;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .recharge-box {
+                    width: 20rem;
+                    height: 12rem;
+                    background-color: white;
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    input {
+                        height: 2rem;
+                        color: #666666;
+                        font-size: 16px;
+                        border: none;
+                        border-bottom: 1px solid #CDCDCD;
+
+                        &:focus {
+                            border-bottom: 1px solid #498EFD;
+                            outline: none;
+                        }
+
+                        &::placeholder {
+                            color: #8F95B0;
+                            font-size: 14px;
+                        }
+                    }
+
+                    button {
+                        color: white;
+                        background-color: #00B5E5;
+                        border-radius: 3px;
+                        padding: 0.5rem 1rem;
+                    }
+
+                    .close {
+                        color: #888888;
+                        background-color: transparent;
+                        padding: 0;
+                        position: absolute;
+                        top: 0.5rem;
+                        right: 1rem;
+                    }
                 }
             }
 
