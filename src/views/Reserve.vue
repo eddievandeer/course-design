@@ -76,7 +76,6 @@
             Calendar
         },
         setup(props) {
-            // TODO: 发送post请求进行预订
             const route = useRoute()
             const store = useStore()
             const router = useRouter()
