@@ -1,6 +1,7 @@
 <template>
     <div class="room-detail">
         <span>房间环境参数：</span>
+        <span class="show-more" @click="showMore">更多></span>
         <div class="environment-info">
             <div class="environment-item">
                 <svg t="1608890310104" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -51,6 +52,21 @@
                 <span>噪声：{{roomData.noise}}</span>
             </div>
         </div>
+        <div class="more-container" v-if="show">
+            <div class="more-box">
+                <button class="close" @click="hideMore"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <span>历史上传记录</span>
+                <div class="more-item" v-for="log in logs" :key="log.did">
+                    <div class="more-item">
+                        <span>温度：{{log.temperature}}</span>
+                        <span>湿度：{{log.humidity}}</span>
+                        <span>PM2.5：{{log.pm}}</span>
+                        <span>噪声：{{log.noise}}</span>
+                        <span>上传日期：{{log.time}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="update-time">
             数据上传时间：{{roomData.time}}
         </div>
@@ -65,7 +81,8 @@
         watch
     } from 'vue'
     import {
-        getData
+        getData,
+        getLog
     } from '../../services'
 
     export default {
@@ -74,10 +91,13 @@
             rid: [String, Number]
         },
         setup(props) {
-            //TODO: show detail
             let roomData = reactive(new Object())
 
+            let logs = reactive(new Array())
+
             let isLoading = ref(false)
+
+            let show = ref(false)
 
             function getRoomData(rid) {
                 isLoading.value = true
@@ -95,9 +115,27 @@
                 getRoomData(newId)
             })
 
+            const showMore = () => {
+                show.value = true
+                logs.splice(0, logs.length)
+                getLog(roomData.rid).then((response) => {
+                    if (response.data.code == 200) {
+                        logs.push(...response.data.object)
+                    }
+                })
+            }
+
+            const hideMore = () => {
+                show.value = false
+            }
+
             return {
                 roomData,
-                isLoading
+                isLoading,
+                show,
+                showMore,
+                hideMore,
+                logs
             }
         }
     }
@@ -110,6 +148,12 @@
 
         span {
             color: #636363;
+
+            &.show-more {
+                color: #3DB3FC;
+                font-size: 14px;
+                cursor: pointer;
+            }
         }
 
         .environment-info {
@@ -127,6 +171,48 @@
                 span {
                     color: #6b6b6b;
                     margin-left: 0.5rem;
+                }
+            }
+        }
+
+        .more-container {
+            z-index: 50;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($color: #000000, $alpha: 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .more-box {
+                width: 42rem;
+                height: auto;
+                padding: 1rem 2rem;
+                background-color: white;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+
+                .close {
+                    color: #888888;
+                    background-color: transparent;
+                    padding: 0;
+                    position: absolute;
+                    top: 0.5rem;
+                    right: 1rem;
+                }
+
+                .more-item {
+                    width: 100%;
+                    height: 4rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
                 }
             }
         }
