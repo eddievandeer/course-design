@@ -14,21 +14,28 @@
                         </svg>
                     </div>
                     <div class="user-detail">
-                        <div class="user-name">{{user.username}}</div>
-                        <div class="user-tel">tel: {{user.phone}}</div>
-                        <div class="certification" v-if="user.realname">已实名</div>
+                        <div class="user-name">{{user.object.username}}</div>
+                        <div class="user-tel">tel: {{user.object.phone}}</div>
+                        <div class="certification" v-if="user.object.realname">已实名</div>
                     </div>
                 </section>
                 <section class="user-wallet">
                     <div class="wallet-title">
                         <span>我的钱包</span>
-                        <router-link to="/">
-                            <button class="">去充值></button>
-                        </router-link>
+                        <button class="recharge" @click="showRecharge">去充值></button>
+                    </div>
+                    <div class="recharge-container" v-if="show">
+                        <div class="recharge-box">
+                            <button class="close" @click="hideRecharge"><i class="fa fa-times"
+                                    aria-hidden="true"></i></button>
+                            <span>请输入充值金额</span>
+                            <input type="text" v-model="amount">
+                            <button @click="doRecharge(user.object.uid, amount)">充值</button>
+                        </div>
                     </div>
                     <div class="wallet-detal">
                         <div class="wallet-item">
-                            <p>{{user.money+'.00'}}</p>
+                            <p>{{user.object.money+'.00'}}</p>
                             <span>现金金额(元)</span>
                         </div>
                         <div class="wallet-item">
@@ -79,7 +86,8 @@
 
 <script>
     import {
-        reactive
+        reactive,
+        ref
     } from 'vue'
 
     import {
@@ -94,7 +102,9 @@
         logs,
         cancel,
         remove,
-        checkout
+        checkout,
+        recharge,
+        showme
     } from '../services'
 
     import LoginHeader from '../components/user/LoginHeader'
@@ -108,8 +118,14 @@
             const store = useStore()
             const router = useRouter()
 
-            let user = store.state.user.object
-            getLogs(user.uid)
+            let show = ref(false)
+
+            let amount = ref('')
+
+            let user = reactive({
+                object: store.state.user.object
+            })
+            getLogs(user.object.uid)
 
             const checkStatus = (status) => {
                 let orderStatus = ''
@@ -132,11 +148,9 @@
                 if (able) {
                     cancel(oid).then((response) => {
                         if (response.data.code == 200) {
-                            getLogs(user.uid)
+                            getLogs(user.object.uid)
                         }
                     })
-                } else {
-                    return
                 }
             }
 
@@ -149,11 +163,9 @@
                 if (able) {
                     remove(oid).then((response) => {
                         if (response.data.code == 200) {
-                            getLogs(user.uid)
+                            getLogs(user.object.uid)
                         }
                     })
-                } else {
-                    return
                 }
             }
 
@@ -161,12 +173,31 @@
                 if (able) {
                     checkout(oid).then((response) => {
                         if (response.data.code == 200) {
-                            getLogs(user.uid)
+                            getLogs(user.object.uid)
                         }
                     })
-                } else {
-                    return
                 }
+            }
+
+            const doRecharge = (uid, amount) => {
+                console.log(uid, amount);
+                recharge(uid, parseInt(amount)).then((response) => {
+                    if (response.data.code == 200) {
+                        show.value = false
+                        showme(uid).then((result) => {
+                            store.commit('SET_USER_DATA', result.data)
+                            user.object = store.state.user.object
+                        })
+                    }
+                })
+            }
+
+            const showRecharge = () => {
+                show.value = true
+            }
+
+            const hideRecharge = () => {
+                show.value = false
             }
 
             return {
@@ -176,7 +207,12 @@
                 cancelOrder,
                 deleteOrder,
                 doCheckout,
-                doLogout
+                doLogout,
+                show,
+                amount,
+                showRecharge,
+                hideRecharge,
+                doRecharge
             }
         }
     }
